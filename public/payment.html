@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - Hulk SMP Store</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .payment-container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #1d1f2f;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00f2ff33;
+    }
+
+    .payment-container h2 {
+      color: #00f2ff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .payment-number {
+      display: none;
+      background: #0b0c1a;
+      color: #00f2ff;
+      border: 1px solid #00f2ff55;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .payment-container label {
+      display: block;
+      margin: 12px 0 5px;
+      color: #ccc;
+    }
+
+    .payment-container input,
+    .payment-container select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      background: #0b0c1a;
+      border: 1px solid #00f2ff33;
+      border-radius: 6px;
+      color: #fff;
+    }
+
+    .payment-container button {
+      width: 100%;
+      padding: 12px;
+      background: #00f2ff;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .payment-container button:hover {
+      background: #00cbe0;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: #00f2ff;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-container">
+    <h2>Complete Your Purchase</h2>
+
+    <!-- Dynamic Payment Number Display -->
+    <div id="paymentNumber" class="payment-number"></div>
+
+    <form action="#" method="post">
+      <label for="username">Minecraft Username</label>
+      <input type="text" id="username" name="username" placeholder="Your username" required>
+
+      <label for="item">Select Item</label>
+      <select id="item" name="item" required>
+        <option value="">-- Choose an item --</option>
+        <option value="vip">VIP Rank - ৳150</option>
+        <option value="premium">Premium Rank - ৳300</option>
+        <option value="pro">PRO Rank - ৳500</option>
+        <option value="fly">Fly Ability - ৳100</option>
+        <option value="speed">Speed Boost - ৳120</option>
+        <option value="keys5">Crate Key x5 - ৳100</option>
+        <option value="keys10">Crate Key x10 - ৳180</option>
+      </select>
+
+      <label for="method">Payment Method</label>
+      <select id="method" name="method" required>
+        <option value="">-- Choose a method --</option>
+        <option value="bkash">Bkash</option>
+        <option value="nagad">Nagad</option>
+        <option value="upi">UPI</option>
+        <option value="paypal">PayPal</option>
+      </select>
+
+      <label for="txn">Transaction ID</label>
+      <input type="text" id="txn" name="txn" placeholder="Enter your payment ID" required>
+
+      <button type="submit">Submit Payment</button>
+    </form>
+
+    <div class="back-link">
+      <p><a href="index.html">← Back to Store</a></p>
+    </div>
+  </div>
+
+  <script>
+    const methodSelect = document.getElementById('method');
+    const paymentBox = document.getElementById('paymentNumber');
+
+    const paymentNumbers = {
+      bkash: 'Pay to: 01XXXXXXXXX (Bkash)',
+      nagad: 'Pay to: 01YYYYYYYYY (Nagad)',
+      upi:   'Pay to: yourname@upi',
+    };
+
+    methodSelect.addEventListener('change', () => {
+      const selected = methodSelect.value;
+      if (paymentNumbers[selected]) {
+        paymentBox.style.display = 'block';
+        paymentBox.textContent = paymentNumbers[selected];
+      } else {
+        paymentBox.style.display = 'none';
+        paymentBox.textContent = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
