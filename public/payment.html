@@ -6,6 +6,13 @@
   <title>Checkout - Hulk SMP Store</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    body {
+      background-color: #0b0c1a;
+      margin: 0;
+      font-family: 'Rubik', sans-serif;
+      color: #fff;
+    }
+
     .payment-container {
       max-width: 500px;
       margin: 60px auto;
@@ -13,7 +20,6 @@
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px #00f2ff33;
-      font-family: 'Rubik', sans-serif;
     }
 
     .payment-container h2 {
@@ -91,10 +97,9 @@
   <div class="payment-container">
     <h2>Complete Your Purchase</h2>
 
-    <!-- Dynamic Payment Number Display -->
     <div id="paymentNumber" class="payment-number"></div>
 
-    <form id="paymentForm" action="#" method="post">
+    <form id="paymentForm">
       <label for="username">Minecraft Username</label>
       <input type="text" id="username" name="username" placeholder="Your username" required>
 
@@ -130,7 +135,7 @@
     </div>
   </div>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
@@ -141,7 +146,7 @@
     const paymentNumbers = {
       bkash: 'Pay to: 01XXXXXXXXX (Bkash)',
       nagad: 'Pay to: 01YYYYYYYYY (Nagad)',
-      upi:   'Pay to: yourname@upi',
+      upi: 'Pay to: yourname@upi',
     };
 
     methodSelect.addEventListener('change', () => {
@@ -155,9 +160,15 @@
       }
     });
 
-    // TODO: Replace the below config with your Firebase project config from Firebase console
+    // Auto-select item from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedItem = urlParams.get('item');
+    if (selectedItem) {
+      document.getElementById('item').value = selectedItem;
+    }
+
+    // Replace this with your actual Firebase config
     const firebaseConfig = {
-      const firebaseConfig = {
       apiKey: "AIza...abc",
       authDomain: "zerox-only.firebaseapp.com",
       databaseURL: "https://zerox-only-default-rtdb.firebaseio.com",
@@ -165,9 +176,8 @@
       storageBucket: "zerox-only.appspot.com",
       messagingSenderId: "1234567890",
       appId: "1:1234567890:web:abcdef123456"
- };
+    };
 
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
@@ -193,21 +203,19 @@
         timestamp: Date.now()
       };
 
-      const ordersRef = database.ref('orders');
-      ordersRef.push(newOrder)
+      database.ref('orders').push(newOrder)
         .then(() => {
-          alert('Order submitted successfully! Thank you.');
+          alert('✅ Order submitted successfully! Thank you.');
           form.reset();
           paymentBox.style.display = 'none';
           paymentBox.textContent = '';
         })
         .catch((error) => {
           console.error('Error submitting order:', error);
-          alert('There was an error submitting your order. Please try again.');
+          alert('❌ Error submitting order. Please try again.');
         });
     });
   </script>
 
 </body>
 </html>
-
